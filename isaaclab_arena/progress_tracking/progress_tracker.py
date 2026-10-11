@@ -369,9 +369,15 @@ class CompletionCriteriaRunner:
         """
 
         env_ids = torch.as_tensor(env_ids, dtype=torch.long, device=self.device)
+        # step() reassigns these tensors, so after a step under torch.inference_mode they are
+        # inference tensors, which a reset outside that mode cannot write in place. Write into
+        # copies: a copy made outside the mode is a normal tensor, one made inside stays usable there.
         for sequence_name in self.completion_criteria.sequence_names:
+            self.current_predicate_index[sequence_name] = self.current_predicate_index[sequence_name].clone()
             self.current_predicate_index[sequence_name][env_ids] = 0
+            self.sequence_score[sequence_name] = self.sequence_score[sequence_name].clone()
             self.sequence_score[sequence_name][env_ids] = 0.0
+            self.sequence_complete[sequence_name] = self.sequence_complete[sequence_name].clone()
             self.sequence_complete[sequence_name][env_ids] = False
 
         for requirement in self._consecutive_step_requirements:
@@ -640,6 +646,8 @@ class ProgressTracker:
 
         if torch.is_tensor(env_ids):
             env_ids = env_ids.tolist()
+        # step() reassigns _task_success; see CompletionCriteriaRunner.reset for why it is copied.
+        self._task_success = self._task_success.clone()
         self._task_success[env_ids] = False
         self._last_processed_step[env_ids] = -1
         for runner in self.runners:
