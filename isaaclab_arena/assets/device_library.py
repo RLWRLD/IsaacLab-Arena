@@ -52,11 +52,17 @@ class OpenXRCfg(TeleopDeviceBase):
             raise ValueError("OpenXRCfg requires a pipeline_builder (got None)")
         xr_cfg = embodiment.get_xr_cfg() if embodiment is not None else XrCfg()
         target_frame_prim_path = embodiment.get_teleop_target_frame_prim_path()
+        controller_button_polling = (
+            embodiment.get_openxr_controller_button_polling()
+            if embodiment is not None and hasattr(embodiment, "get_openxr_controller_button_polling")
+            else True
+        )
         return IsaacTeleopCfg(
             pipeline_builder=pipeline_builder,
             sim_device=self.sim_device,
             xr_cfg=xr_cfg,
             target_frame_prim_path=target_frame_prim_path,
+            controller_button_polling=controller_button_polling,
         )
 
 
