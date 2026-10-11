@@ -67,8 +67,13 @@ class ObjectInitialRestPoseRecorder:
             ids = env_ids
         else:
             ids = torch.as_tensor(env_ids, dtype=torch.long, device=self._device)
+        # record() reassigns these tensors and _entry() may create them during a step, so after a
+        # step under torch.inference_mode they are inference tensors, which a reset outside that mode
+        # cannot write in place. Write into copies, as ProgressTracker.reset does.
         for entry in self._entries.values():
+            entry["settled"] = entry["settled"].clone()
             entry["settled"][ids] = False
+            entry["position"] = entry["position"].clone()
             entry["position"][ids] = float("nan")
 
 
