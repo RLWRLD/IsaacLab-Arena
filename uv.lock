@@ -21,7 +21,7 @@ overrides = [
     { name = "coverage", specifier = "==7.4.4" },
     { name = "mujoco", specifier = "==3.15.0" },
     { name = "mujoco-warp", specifier = "==3.15.0" },
-    { name = "newton", extras = ["sim"], git = "https://github.com/RLWRLD/newton.git?rev=9c28c80c1ba134e54c4ee63cbbf251cf3eec7adc" },
+    { name = "newton", extras = ["sim"], git = "https://github.com/RLWRLD/newton.git?rev=646cece4e618bd7e878b1815cce56f107b1af40e" },
     { name = "newton-usd-schemas", specifier = "==0.5.0" },
     { name = "numpy", specifier = "==2.3.1" },
     { name = "packaging", specifier = "==26.0" },
@@ -3315,7 +3315,7 @@ wheels = [
 [[package]]
 name = "newton"
 version = "1.8.0.dev0"
-source = { git = "https://github.com/RLWRLD/newton.git?rev=9c28c80c1ba134e54c4ee63cbbf251cf3eec7adc#9c28c80c1ba134e54c4ee63cbbf251cf3eec7adc" }
+source = { git = "https://github.com/RLWRLD/newton.git?rev=646cece4e618bd7e878b1815cce56f107b1af40e#646cece4e618bd7e878b1815cce56f107b1af40e" }
 dependencies = [
     { name = "warp-lang", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
 ]

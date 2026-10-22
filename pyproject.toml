@@ -128,7 +128,7 @@ override-dependencies = [
     "numpy==2.3.1",
     "mujoco==3.15.0",
     "mujoco-warp==3.15.0",
-    "newton[sim] @ git+https://github.com/RLWRLD/newton.git@9c28c80c1ba134e54c4ee63cbbf251cf3eec7adc",
+    "newton[sim] @ git+https://github.com/RLWRLD/newton.git@646cece4e618bd7e878b1815cce56f107b1af40e",
     "newton-usd-schemas==0.5.0",
     "torch==2.11.0",
     "torchvision==0.26.0",
