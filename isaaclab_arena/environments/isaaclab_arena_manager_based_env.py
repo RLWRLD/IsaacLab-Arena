@@ -236,6 +236,12 @@ class IsaacLabArenaManagerBasedRLEnv(ManagerBasedRLEnv):
         """
         return self.metrics_manager.compute()
 
+    def close(self) -> None:
+        # ArenaWorld holds the scene: drop it so Lab's ``del self.scene`` releases the scene in its
+        # teardown order instead of leaving it to a later garbage collection.
+        self._arena_world = None
+        super().close()
+
 
 class IsaacLabArenaManagerBasedRLMimicEnv(IsaacLabArenaManagerBasedRLEnv, ManagerBasedRLMimicEnv):
     """Arena environment with the Isaac Lab Mimic interface."""
